@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, events, users, workspaceMembers, workspaces } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -88,4 +88,65 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function listWorkspacesForUser(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select({ workspace: workspaces, role: workspaceMembers.role })
+    .from(workspaceMembers)
+    .innerJoin(workspaces, eq(workspaceMembers.workspaceId, workspaces.id))
+    .where(eq(workspaceMembers.userId, userId));
+}
+
+export async function listEventsForUser(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select({ event: events, workspaceRole: workspaceMembers.role })
+    .from(events)
+    .innerJoin(workspaceMembers, eq(events.workspaceId, workspaceMembers.workspaceId))
+    .where(eq(workspaceMembers.userId, userId));
+}
+
+export async function createWorkspaceForUser(userId: number, name: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+
+  const inserted = await db.insert(workspaces).values({ ownerId: userId, name });
+  const workspaceId = Number(inserted[0].insertId);
+  await db.insert(workspaceMembers).values({ workspaceId, userId, role: "owner" });
+  return workspaceId;
+}
+
+export async function createEventForUser(userId: number, input: {
+  workspaceId: number;
+  name: string;
+  eventDate: Date;
+  venue?: string;
+  city?: string;
+  goal?: string;
+  attendeeTarget?: number;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+
+  const membership = await db
+    .select({ id: workspaceMembers.id })
+    .from(workspaceMembers)
+    .where(and(eq(workspaceMembers.workspaceId, input.workspaceId), eq(workspaceMembers.userId, userId)))
+    .limit(1);
+  if (!membership.length) throw new Error("Workspace access denied");
+
+  const inserted = await db.insert(events).values({
+    workspaceId: input.workspaceId,
+    name: input.name,
+    eventDate: input.eventDate,
+    venue: input.venue,
+    city: input.city,
+    goal: input.goal,
+    attendeeTarget: input.attendeeTarget ?? 0,
+  });
+  return Number(inserted[0].insertId);
+}
