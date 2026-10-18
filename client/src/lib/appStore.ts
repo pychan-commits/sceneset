@@ -6,7 +6,13 @@ const STORAGE_KEY = "sceneset-demo-v1";
 function readData(): SceneSetData {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return { ...defaultData, ...(JSON.parse(saved) as Partial<SceneSetData>), files: (JSON.parse(saved) as Partial<SceneSetData>).files || defaultData.files } as SceneSetData;
+    if (saved) {
+      const parsed = JSON.parse(saved) as Partial<SceneSetData>;
+      const migratedEvent = parsed.event?.name === "Afterglow / Community Night" && !parsed.events?.length
+        ? { ...parsed.event, name: "Midnight Garden Gala" }
+        : parsed.event;
+      return { ...defaultData, ...parsed, event: migratedEvent || defaultData.event, files: parsed.files || defaultData.files } as SceneSetData;
+    }
   } catch {
     // Fall back to the deterministic demo when storage is unavailable.
   }

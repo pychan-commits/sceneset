@@ -10,7 +10,7 @@ import SharedDayOf from "./pages/SharedDayOf";
 import Workspace from "./pages/Workspace";
 
 function App() {
-  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster position="bottom-right" /><Switch><Route path="/" component={Landing} /><Route path="/login" component={Login} /><Route path="/shared" component={SharedDayOf} /><Route path="/share/:token" component={SharedDayOf} /><Route path="/app/:view?" component={Workspace} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster position="bottom-right" /><Switch><Route path="/" component={Landing} /><Route path="/login" component={Login} /><Route path="/shared" component={SharedDayOf} /><Route path="/share/:token" component={SharedDayOf} /><Route path="/app/recap/:id" component={Workspace} /><Route path="/app/:view?" component={Workspace} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }
 
 export default App;

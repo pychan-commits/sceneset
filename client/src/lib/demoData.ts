@@ -132,6 +132,7 @@ export type EventRecord = {
 
 export type SceneSetData = {
   event: EventRecord;
+  events?: EventRecord[];
   tasks: Task[];
   budget: BudgetItem[];
   suppliers: Supplier[];
@@ -148,7 +149,7 @@ export type SceneSetData = {
 export const defaultData: SceneSetData = {
   event: {
     id: "evt-1",
-    name: "Afterglow / Community Night",
+    name: "Midnight Garden Gala",
     date: "18 Oct 2026",
     weekday: "Sunday",
     venue: "The Tram Depot",
@@ -157,6 +158,7 @@ export const defaultData: SceneSetData = {
     attendees: 240,
     accent: "#f25c54",
   },
+  events: [],
   tasks: [
     { id: "t-1", title: "Lock final floor plan", project: "Production", owner: "Maya Chen", initials: "MC", due: "Today", priority: "High", status: "in-progress", color: "#e8b44c" },
     { id: "t-2", title: "Approve artist hospitality list", project: "Guest experience", owner: "Ari Bell", initials: "AB", due: "Today", priority: "High", status: "review", color: "#95cdbb" },

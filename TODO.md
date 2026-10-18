@@ -66,3 +66,11 @@
 - [x] Supplier edit reopens a full form with name, category, contact, email/phone, quote amount, status and notes.
 - [x] Venue layout supports additional Quiet room and Merch items; existing items retain drag and delete controls.
 - [x] Pricing View plan details opens a clear detail modal for the Free personal and Organiser plans.
+
+## Latest event and planning fixes
+
+- [x] Notes & Activity no longer shows the View Audit Log option.
+- [x] Every venue-map item is explicitly draggable when the layout is unlocked and remains deletable; the palette includes Stage, Bar, Seating, Entry, Power, Quiet room and Merch.
+- [x] New tasks require both a due date and due time in the real add-task form before submission.
+- [x] Event creation persists the new event, opens it as the current event, renders it in the Events list and updates the sidebar immediately; the sample event is named Midnight Garden Gala.
+- [x] View recap opens a dedicated detailed read-only recap page with run of show, supplier contacts, guest/budget snapshot and layout notes.
