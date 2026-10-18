@@ -6,7 +6,7 @@ const STORAGE_KEY = "sceneset-demo-v1";
 function readData(): SceneSetData {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved) as SceneSetData;
+    if (saved) return { ...defaultData, ...(JSON.parse(saved) as Partial<SceneSetData>), files: (JSON.parse(saved) as Partial<SceneSetData>).files || defaultData.files } as SceneSetData;
   } catch {
     // Fall back to the deterministic demo when storage is unavailable.
   }

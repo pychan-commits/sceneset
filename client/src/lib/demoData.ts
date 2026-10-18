@@ -103,6 +103,14 @@ export type Activity = {
   color: string;
 };
 
+export type FileRecord = {
+  id: string;
+  name: string;
+  sizeBytes: number;
+  mimeType: string;
+  uploaded: string;
+};
+
 export type EventRecord = {
   id: string;
   name: string;
@@ -113,6 +121,7 @@ export type EventRecord = {
   goal: string;
   attendees: number;
   accent: string;
+  archived?: boolean;
 };
 
 export type SceneSetData = {
@@ -125,6 +134,7 @@ export type SceneSetData = {
   layout: LayoutItem[];
   notes: Note[];
   activity: Activity[];
+  files: FileRecord[];
   layoutLocked: boolean;
   contingency: number;
 };
@@ -203,6 +213,11 @@ export const defaultData: SceneSetData = {
     { id: "a-3", actor: "Nia Patel", initials: "NP", action: "uploaded", subject: "Northstar AV quote v2.pdf", time: "1 hr ago", color: "#95cdbb" },
     { id: "a-4", actor: "Ari Bell", initials: "AB", action: "mentioned", subject: "Jordan in Quiet room checklist", time: "1 hr ago", color: "#e8b44c" },
     { id: "a-5", actor: "Maya Chen", initials: "MC", action: "locked", subject: "Event access / venue details", time: "Yesterday", color: "#f25c54" },
+  ],
+  files: [
+    { id: "f-1", name: "Northstar AV quote v2.pdf", sizeBytes: 420000, mimeType: "application/pdf", uploaded: "1 hr ago" },
+    { id: "f-2", name: "tram-depot-floor-plan.png", sizeBytes: 860000, mimeType: "image/png", uploaded: "Yesterday" },
+    { id: "f-3", name: "afterglow-moodboard.jpg", sizeBytes: 1200000, mimeType: "image/jpeg", uploaded: "Yesterday" },
   ],
   layoutLocked: false,
   contingency: 8,

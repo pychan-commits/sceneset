@@ -1,1 +1,1 @@
-{"routes":[{"path":"/","title":"SceneSet landing"},{"path":"/login","title":"SceneSet account entry"},{"path":"/shared","title":"Shared day-of view"},{"path":"/app/:view?","title":"SceneSet workspace"},{"path":"/404","title":"Not found"}]}
+{"routes":[{"path":"/","title":"SceneSet landing"},{"path":"/login","title":"SceneSet account entry"},{"path":"/shared","title":"Shared day-of view"},{"path":"/share/:token","title":"Public day-of view"},{"path":"/app/:view?","title":"SceneSet workspace"},{"path":"/404","title":"Not found"}]}
