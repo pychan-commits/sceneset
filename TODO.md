@@ -32,3 +32,13 @@
   - Keep the managed server/database setup, starter auth/session contract, health route and typed tRPC entrypoint working.
   - Add the operational entity schema for Users, Workspaces, Events, Tasks, Schedules, Suppliers, Quotes, Budget items, Guests, Venues, Layout items, Notes, Activity/Audit log and Templates.
   - Keep `public/manus-routes.json` synchronized with all page routes, preserve accessible labels/contrast, and ensure production build/typecheck succeed.
+
+
+## Interaction repair pass
+
+- [x] Budget controls: contingency percentage is editable, category/status filters work, budget status has a real dropdown, and Add line creates a persisted line with edit/delete actions.
+- [x] Notes & activity: teammate mention flow lists teammates, activity filtering works, note deletion confirms and removes the note, audit-log action is wired, and the header bell opens an activity drawer.
+- [x] Suppliers and guests: supplier category/status filters work, supplier status is a real dropdown, supplier row actions edit/delete, and guest row actions edit/delete while retaining bulk RSVP and final headcount.
+- [x] Tasks: Add task opens a simple name/category modal, category is stored as a colored project tag, task edit/delete work, bulk status actions remain available, and drag/keyboard movement has visible targets.
+- [x] Schedule and layout: Add moment creates a run-of-show item, timeline legend explains Crew/Show flow/Guest/Milestone, Add item creates a canvas facility, and locked/unlocked drag placement works.
+- [x] Workspace and supporting flows: sidebar event/workspace/account controls are actionable, archived event recap opens the read-only workspace, pricing plan actions are useful, settings Manage files deletes attachments, Day-of Pack opens its preview, search filters current data, and readiness navigation/progress actions remain clickable.
