@@ -185,7 +185,7 @@ function Sidebar({ activeView, onNavigate, onReset }: { activeView: ViewKey; onN
     <button className="workspace-switcher" onClick={() => toast.info("Afterglow team is the active workspace") }><span className="workspace-avatar">A</span><span><small>WORKSPACE</small><strong>Afterglow team</strong></span><ChevronDown size={14} /></button>
     <div className="sidebar-scroll">
       <SectionLabel action={<button className="small-icon-button" onClick={() => onNavigate("events")} aria-label="Add event"><Plus size={14} /></button>}>EVENT</SectionLabel>
-      <button className="event-switcher"><span className="event-color" /><span><strong>{"Afterglow / Community Night"}</strong><small>18 Oct · The Tram Depot</small></span><ChevronDown size={14} /></button>
+      <button className="event-switcher" onClick={() => onNavigate("events")}><span className="event-color" /><span><strong>{"Afterglow / Community Night"}</strong><small>18 Oct · The Tram Depot</small></span><ChevronDown size={14} /></button>
       <SectionLabel>PLAN</SectionLabel>
       <nav className="side-nav">{navItems.map(item => <NavButton key={item.key} item={item} active={activeView === item.key} onClick={() => onNavigate(item.key)} />)}</nav>
       <SectionLabel>MORE</SectionLabel>
