@@ -50,6 +50,7 @@ export type Supplier = {
   paid: number;
   initials: string;
   color: string;
+  notes?: string;
 };
 
 export type Guest = {
@@ -80,7 +81,7 @@ export type ScheduleItem = {
 
 export type LayoutItem = {
   id: string;
-  type: "stage" | "table" | "bar" | "entrance" | "power" | "seating";
+  type: "stage" | "table" | "bar" | "entrance" | "power" | "seating" | "quiet" | "merch";
   label: string;
   x: number;
   y: number;

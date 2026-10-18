@@ -55,3 +55,14 @@
 ## Sidebar / user menu cleanup
 
 - [x] Removed the non-functional “…” overflow control next to Maya in the sidebar account row; the Maya row remains a direct Settings shortcut.
+
+
+## Timeline and workspace completion pass
+
+- [x] Timeline items now show their full time period and clicking an item opens the same real form used by Add moment: start time, end time, title, type, owner and location.
+- [x] Past-event View recap opens a read-only recap for the specific event clicked instead of navigating to another event.
+- [x] The sidebar receives live event data, so a newly created event immediately updates the event label and date/venue summary; the unused EVENT plus control was removed.
+- [x] New workspace opens a real workspace-name/type form.
+- [x] Supplier edit reopens a full form with name, category, contact, email/phone, quote amount, status and notes.
+- [x] Venue layout supports additional Quiet room and Merch items; existing items retain drag and delete controls.
+- [x] Pricing View plan details opens a clear detail modal for the Free personal and Organiser plans.
