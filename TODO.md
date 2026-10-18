@@ -33,7 +33,6 @@
   - Add the operational entity schema for Users, Workspaces, Events, Tasks, Schedules, Suppliers, Quotes, Budget items, Guests, Venues, Layout items, Notes, Activity/Audit log and Templates.
   - Keep `public/manus-routes.json` synchronized with all page routes, preserve accessible labels/contrast, and ensure production build/typecheck succeed.
 
-
 ## Interaction repair pass
 
 - [x] Budget controls: contingency percentage is editable, category/status filters work, budget status has a real dropdown, and Add line creates a persisted line with edit/delete actions.
@@ -42,3 +41,12 @@
 - [x] Tasks: Add task opens a simple name/category modal, category is stored as a colored project tag, task edit/delete work, bulk status actions remain available, and drag/keyboard movement has visible targets.
 - [x] Schedule and layout: Add moment creates a run-of-show item, timeline legend explains Crew/Show flow/Guest/Milestone, Add item creates a canvas facility, and locked/unlocked drag placement works.
 - [x] Workspace and supporting flows: sidebar event/workspace/account controls are actionable, archived event recap opens the read-only workspace, pricing plan actions are useful, settings Manage files deletes attachments, Day-of Pack opens its preview, search filters current data, and readiness navigation/progress actions remain clickable.
+
+## Latest interaction completion pass
+
+- [x] Task board provides real assignee dropdowns, working status/priority/category filters, task edit/delete, coloured category tags, and a simple required-name/category add form with optional later priority/due editing.
+- [x] Run of show provides real start/end time, title, type, owner and location fields for adding/editing moments, with timeline legend and time-based item movement.
+- [x] Venue layout supports adding facilities from a palette, visible drag feedback, and deleting mistaken items.
+- [x] Events supports event name, date, expected guests, venue and goal fields; past-event recap opens a real workspace view.
+- [x] Workspace selector, invite teammate, manage files, guest CRUD/forms, supplier category/status controls, budget contingency/status/add-line, notes/mentions/activity, notification drawer, Day-of Pack preview, search and landing workflow controls are actionable.
+- [x] Every newly added workflow uses real inputs and dropdowns rather than missing controls or prompt-only add forms.
