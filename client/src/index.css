@@ -419,3 +419,12 @@ html.compact-density .guest-summary > div { padding-top: 10px; padding-bottom: 1
 .recap-detail-grid .pack-layout-mini { min-height: 180px; margin-top: 15px; }
 @media (max-width: 900px) { .recap-detail-grid { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .recap-hero { flex-direction: column; } .recap-stat-grid { grid-template-columns: 1fr; } .recap-detail-row { grid-template-columns: 1fr auto; } .recap-detail-row > strong { grid-column: 1 / -1; } }
+
+
+/* Venue map drag reliability */
+.layout-canvas { pointer-events: auto; }
+.layout-object { pointer-events: auto; cursor: grab; touch-action: none; }
+.layout-object.is-dragging { cursor: grabbing; opacity: .72; z-index: 4; }
+.layout-object .drag-grip, .layout-object > span { pointer-events: none; }
+.layout-object .layout-delete { pointer-events: auto; position: relative; z-index: 5; }
+.event-card-actions { display: inline-flex; align-items: center; gap: 3px; }

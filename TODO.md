@@ -36,7 +36,7 @@
 ## Interaction repair pass
 
 - [x] Budget controls: contingency percentage is editable, category/status filters work, budget status has a real dropdown, and Add line creates a persisted line with edit/delete actions.
-- [x] Notes & activity: teammate mention flow lists teammates, activity filtering works, note deletion confirms and removes the note, audit-log action is wired, and the header bell opens an activity drawer.
+- [x] Notes & activity: teammate mention flow lists teammates, activity filtering works, note deletion confirms and removes the note, the audit-log option is removed, and the header bell opens an activity drawer.
 - [x] Suppliers and guests: supplier category/status filters work, supplier status is a real dropdown, supplier row actions edit/delete, and guest row actions edit/delete while retaining bulk RSVP and final headcount.
 - [x] Tasks: Add task opens a simple name/category modal, category is stored as a colored project tag, task edit/delete work, bulk status actions remain available, and drag/keyboard movement has visible targets.
 - [x] Schedule and layout: Add moment creates a run-of-show item, timeline legend explains Crew/Show flow/Guest/Milestone, Add item creates a canvas facility, and locked/unlocked drag placement works.
@@ -74,3 +74,11 @@
 - [x] New tasks require both a due date and due time in the real add-task form before submission.
 - [x] Event creation persists the new event, opens it as the current event, renders it in the Events list and updates the sidebar immediately; the sample event is named Midnight Garden Gala.
 - [x] View recap opens a dedicated detailed read-only recap page with run of show, supplier contacts, guest/budget snapshot and layout notes.
+
+## Latest state and deletion fixes
+
+- [x] Removed the View Audit Log option and its related UI path from Notes & Activity.
+- [x] Venue items are always draggable when unlocked, use pointer-events auto and a grab cursor, and Reset layout / return restores the canonical default positions.
+- [x] New events are prepended to the persisted event state and immediately drive both the Events page and sidebar current-event summary.
+- [x] Recaps use the unique event ID in `/app/recap/:id`, including stable IDs for archived demo events, so the selected event is rendered.
+- [x] Event cards include confirmed-delete actions that remove the event from local state and select the next available event when the current event is deleted.
