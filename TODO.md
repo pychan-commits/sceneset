@@ -50,3 +50,8 @@
 - [x] Events supports event name, date, expected guests, venue and goal fields; past-event recap opens a real workspace view.
 - [x] Workspace selector, invite teammate, manage files, guest CRUD/forms, supplier category/status controls, budget contingency/status/add-line, notes/mentions/activity, notification drawer, Day-of Pack preview, search and landing workflow controls are actionable.
 - [x] Every newly added workflow uses real inputs and dropdowns rather than missing controls or prompt-only add forms.
+
+
+## Sidebar / user menu cleanup
+
+- [x] Removed the non-functional “…” overflow control next to Maya in the sidebar account row; the Maya row remains a direct Settings shortcut.
