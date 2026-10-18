@@ -15,6 +15,8 @@ export type ViewKey =
 export type TaskStatus = "backlog" | "in-progress" | "review" | "done";
 export type SupplierStatus = "Inquiry" | "Quote received" | "Confirmed" | "Paid";
 export type RSVPStatus = "Confirmed" | "Pending" | "Declined";
+export type GuestGender = "Male" | "Female" | "Other" | "Prefer not to say";
+export type GuestSegment = "VIP" | "Media" | "Vendor" | "Staff" | "General";
 
 export type Task = {
   id: string;
@@ -55,7 +57,10 @@ export type Guest = {
   name: string;
   company: string;
   role: string;
-  tag: "VIP" | "Media" | "Vendor" | "Staff";
+  gender?: GuestGender;
+  phone?: string;
+  email?: string;
+  tag: GuestSegment;
   rsvp: RSVPStatus;
   plusOne: boolean;
   initials: string;
