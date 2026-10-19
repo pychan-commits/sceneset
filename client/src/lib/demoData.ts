@@ -108,6 +108,7 @@ export type Activity = {
   subject: string;
   time: string;
   color: string;
+  createdAt?: number;
 };
 
 export type FileRecord = {

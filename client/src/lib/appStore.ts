@@ -1,10 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { defaultData, type Activity, type SceneSetData } from "./demoData";
 
 const STORAGE_KEY = "sceneset-demo-v1";
+const ACTIVITY_LIMIT = 50;
+const ACTIVITY_CHANNEL = "sceneset-activity-v1";
 const CURRENT_ACTOR = { actor: "Maya Chen", initials: "MC", color: "#f25c54" };
 
 type ActivityChange = Pick<Activity, "action" | "subject">;
+type SharedMessage = { source: string; data: SceneSetData };
+
+function limitActivities(items: Activity[]) {
+  const unique = new Map<string, Activity>();
+  for (const item of items) unique.set(item.id, item);
+  return [...unique.values()]
+    .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+    .slice(0, ACTIVITY_LIMIT);
+}
+
+function normalizeData(data: SceneSetData): SceneSetData {
+  return { ...data, activity: limitActivities(data.activity || []) };
+}
 
 function readData(): SceneSetData {
   try {
@@ -14,12 +29,12 @@ function readData(): SceneSetData {
       const migratedEvent = parsed.event?.name === "Afterglow / Community Night" && !parsed.events?.length
         ? { ...parsed.event, name: "Midnight Garden Gala" }
         : parsed.event;
-      return { ...defaultData, ...parsed, event: migratedEvent || defaultData.event, files: parsed.files || defaultData.files } as SceneSetData;
+      return normalizeData({ ...defaultData, ...parsed, event: migratedEvent || defaultData.event, files: parsed.files || defaultData.files } as SceneSetData);
     }
   } catch {
     // Fall back to the deterministic demo when storage is unavailable.
   }
-  return defaultData;
+  return normalizeData(defaultData);
 }
 
 function changed<T>(before: T, after: T) {
@@ -27,11 +42,15 @@ function changed<T>(before: T, after: T) {
 }
 
 function makeActivity(change: ActivityChange, index: number): Activity {
+  const randomId = typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2);
   return {
-    id: `a-live-${Date.now()}-${index}`,
+    id: `a-live-${Date.now()}-${index}-${randomId}`,
     ...CURRENT_ACTOR,
     ...change,
     time: "Just now",
+    createdAt: Date.now(),
   };
 }
 
@@ -89,12 +108,7 @@ function buildActivityChanges(previous: SceneSetData, next: SceneSetData): Activ
   const guestChange = diffCollection(previous.guests, next.guests, item => item.name);
   if (guestChange) changes.push(guestChange);
 
-  const scheduleChange = diffCollection(
-    previous.schedule,
-    next.schedule,
-    item => item.title,
-    "updated",
-  );
+  const scheduleChange = diffCollection(previous.schedule, next.schedule, item => item.title, "updated");
   if (scheduleChange) {
     const completedMoment = next.schedule.find(item => {
       const before = previous.schedule.find(candidate => candidate.id === item.id);
@@ -111,18 +125,72 @@ function buildActivityChanges(previous: SceneSetData, next: SceneSetData): Activ
     changes.push({ action: next.layoutLocked ? "locked" : "unlocked", subject: "Venue layout" });
   }
 
+  const noteChange = diffCollection(previous.notes, next.notes, item => item.title);
+  if (noteChange) {
+    const updatedNote = next.notes.find(item => previous.notes.some(before => before.id === item.id));
+    if (!updatedNote) {
+      changes.push(noteChange);
+    } else {
+      const previousNote = previous.notes.find(item => item.id === updatedNote.id);
+      const mention = previousNote && updatedNote.body !== previousNote.body
+        ? updatedNote.body.match(/@[A-Za-z][A-Za-z .'-]*/)?.[0]?.trim()
+        : null;
+      const pinned = previousNote && !previousNote.pinned && updatedNote.pinned;
+      changes.push(pinned
+        ? { action: "pinned", subject: updatedNote.title }
+        : mention
+          ? { action: "mentioned", subject: `${mention.slice(1)} in ${updatedNote.title}` }
+          : noteChange);
+    }
+  }
+
   return changes;
 }
 
 function withLiveActivity(previous: SceneSetData, next: SceneSetData): SceneSetData {
   const changes = buildActivityChanges(previous, next);
-  if (!changes.length) return next;
+  if (!changes.length) return normalizeData(next);
   const liveEntries = changes.map(makeActivity);
-  return { ...next, activity: [...liveEntries, ...next.activity] };
+  return normalizeData({ ...next, activity: [...liveEntries, ...next.activity] });
 }
 
 export function useSceneSetData() {
   const [data, setData] = useState<SceneSetData>(readData);
+  const channelRef = useRef<BroadcastChannel | null>(null);
+  const tabIdRef = useRef(`tab-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const remoteUpdateRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const applyRemoteData = (incoming: SceneSetData) => {
+      remoteUpdateRef.current = true;
+      setData(normalizeData(incoming));
+    };
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY || !event.newValue) return;
+      try {
+        applyRemoteData(JSON.parse(event.newValue) as SceneSetData);
+      } catch {
+        // Ignore malformed cross-tab payloads and keep the current workspace usable.
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    if (typeof BroadcastChannel !== "undefined") {
+      const channel = new BroadcastChannel(ACTIVITY_CHANNEL);
+      channelRef.current = channel;
+      channel.onmessage = (event: MessageEvent<SharedMessage>) => {
+        if (event.data?.source !== tabIdRef.current && event.data?.data) applyRemoteData(event.data.data);
+      };
+    }
+
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      channelRef.current?.close();
+      channelRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -130,6 +198,12 @@ export function useSceneSetData() {
     } catch {
       // The workspace remains usable in restricted preview contexts.
     }
+
+    if (remoteUpdateRef.current) {
+      remoteUpdateRef.current = false;
+      return;
+    }
+    channelRef.current?.postMessage({ source: tabIdRef.current, data } satisfies SharedMessage);
   }, [data]);
 
   const update = (next: SceneSetData | ((current: SceneSetData) => SceneSetData)) => {
@@ -139,7 +213,7 @@ export function useSceneSetData() {
     });
   };
 
-  const resetDemo = () => setData(defaultData);
+  const resetDemo = () => setData(normalizeData(defaultData));
 
   return { data, update, resetDemo };
 }

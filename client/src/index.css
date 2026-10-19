@@ -259,6 +259,8 @@ a { color: inherit; text-decoration: none; }
 .activity-list { display: grid; gap: 1px; margin-top: 10px; }
 .activity-line { display: flex; align-items: flex-start; gap: 9px; padding: 9px 0; border-bottom: 1px solid var(--line); }
 .activity-line:last-child { border-bottom: 0; }
+.activity-line-new { animation: activity-arrive .5s ease both; border-radius: 6px; background: color-mix(in srgb, var(--mint) 12%, transparent); padding-inline: 7px; }
+@keyframes activity-arrive { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 .activity-line > span:last-child { display: block; min-width: 0; flex: 1; }
 .activity-line strong, .activity-line small, .activity-line time { display: block; }
 .activity-line strong { font-size: 11px; }.activity-line em { color: var(--ink-faint); font-style: normal; font-weight: 500; }.activity-line small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-soft); font-size: 10px; margin-top: 2px; }.activity-line time { color: var(--ink-faint); font-size: 9px; margin-top: 3px; }
