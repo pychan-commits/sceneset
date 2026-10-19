@@ -37,6 +37,7 @@ export type BudgetItem = {
   planned: number;
   actual: number;
   status: "On track" | "Watch" | "Over";
+  notes?: string;
 };
 
 export type Supplier = {

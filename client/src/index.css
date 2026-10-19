@@ -428,3 +428,7 @@ html.compact-density .guest-summary > div { padding-top: 10px; padding-bottom: 1
 .layout-object .drag-grip, .layout-object > span { pointer-events: none; }
 .layout-object .layout-delete { pointer-events: auto; position: relative; z-index: 5; }
 .event-card-actions { display: inline-flex; align-items: center; gap: 3px; }
+
+
+.brand-lockup { border: 0; padding: 0; background: transparent; cursor: pointer; text-align: left; }
+.brand-lockup:focus-visible { outline: 2px solid var(--coral); outline-offset: 4px; border-radius: 6px; }

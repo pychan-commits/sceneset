@@ -89,3 +89,10 @@
 - [x] Added `vercel.json` with frozen pnpm installation, `dist/public` output, SPA rewrites and cache headers.
 - [x] Added a static `/api/platform/config.js` asset and `.vercelignore` so backend TypeScript and migrations are not exposed by the static deployment.
 - [x] Documented the Vercel deployment boundary in `VERCEL.md`.
+
+
+## Latest UI polish
+
+- [x] Venue Layout now labels the default-position restore control simply `Reset` while retaining instant restoration of all elements.
+- [x] The sidebar SceneSet logo is a keyboard-focusable button that navigates to `/`.
+- [x] Budget line editing now supports item name, category, budgeted amount, actual amount, status and notes in one real form.
