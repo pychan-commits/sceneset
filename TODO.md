@@ -96,3 +96,8 @@
 - [x] Venue Layout now labels the default-position restore control simply `Reset` while retaining instant restoration of all elements.
 - [x] The sidebar SceneSet logo is a keyboard-focusable button that navigates to `/`.
 - [x] Budget line editing now supports item name, category, budgeted amount, actual amount, status and notes in one real form.
+
+## Budget modal and real-time activity
+
+- [x] Budget row editing uses a full multi-field modal for name/supplier name, category, status, planned/budgeted amount, actual/quote amount and notes/comments; saving updates the persisted SceneSet state immediately.
+- [x] Adding a task, completing/moving a task, and bulk task status changes prepend live activity entries with a `Just now` timestamp so the Activity Feed updates without refresh.
