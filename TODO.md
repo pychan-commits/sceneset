@@ -82,3 +82,10 @@
 - [x] New events are prepended to the persisted event state and immediately drive both the Events page and sidebar current-event summary.
 - [x] Recaps use the unique event ID in `/app/recap/:id`, including stable IDs for archived demo events, so the selected event is rendered.
 - [x] Event cards include confirmed-delete actions that remove the event from local state and select the next available event when the current event is deleted.
+
+## Vercel static deployment
+
+- [x] Added `vite.vercel.config.ts` and `pnpm build:vercel` for a client-only Vite build.
+- [x] Added `vercel.json` with frozen pnpm installation, `dist/public` output, SPA rewrites and cache headers.
+- [x] Added a static `/api/platform/config.js` asset and `.vercelignore` so backend TypeScript and migrations are not exposed by the static deployment.
+- [x] Documented the Vercel deployment boundary in `VERCEL.md`.

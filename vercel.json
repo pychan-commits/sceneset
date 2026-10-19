@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "framework": "vite",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm build:vercel",
+  "outputDirectory": "dist/public",
+  "rewrites": [
+    { "source": "/app/:path*", "destination": "/index.html" },
+    { "source": "/share/:path*", "destination": "/index.html" },
+    { "source": "/shared", "destination": "/index.html" },
+    { "source": "/login", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/:path*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/api/platform/config.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    }
+  ]
+}

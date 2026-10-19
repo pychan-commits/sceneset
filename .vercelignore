@@ -1,0 +1,8 @@
+# Vercel deployment is intentionally static-client-only.
+server/
+drizzle/
+Dockerfile
+.manus-logs/
+dist/
+node_modules/
+*.test.ts
