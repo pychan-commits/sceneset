@@ -9,7 +9,7 @@
 ## Module 1: Environment & Secret Key Setup
 
 - [x] Initialise Next.js App Router project with TypeScript and Tailwind CSS (`npx create-next-app@latest`)
-- [ ] Install core dependencies: `drizzle-orm`, `@neondatabase/serverless`, `drizzle-kit`, `@clerk/nextjs`, `stripe`, `zod`, `lucide-react` (or preferred icon set)
+- [x] Install core dependencies: `drizzle-orm`, `@neondatabase/serverless`, `drizzle-kit`, `@clerk/nextjs`, `stripe`, `zod`, `lucide-react` (or preferred icon set)
 - [ ] Create `.env.local` with all required keys (Clerk, DATABASE_URL, Stripe test keys, ImageKit)
 - [ ] Add `.env.local` to `.gitignore` and confirm it is never committed
 - [ ] Create `.env.example` documenting every required variable (no real secrets)
@@ -18,7 +18,7 @@
 
 **Verification Gate:**
 - [x] Run `npm run build` and confirm zero TypeScript errors
-- [ ] Confirm `.env.local` is present and `.env.example` is committed  
+- [ ] Confirm `.env.local` is present and `.env.example` is committed
 
 ---
 
@@ -188,7 +188,7 @@
 ## Session audit notes — 2026-10-19
 
 - **Completed Module 1 / Task 1.1:** Added a root Next.js 15 App Router foundation with strict TypeScript participation, Tailwind v4 PostCSS wiring, root layout metadata, initial landing route, and explicit `dev:next`, `build:next`, and `start:next` scripts. Verification passed with `pnpm build:next`, the existing `pnpm build`, and `pnpm check`; the existing Vite/Express build remains intact for the current public deployment.
-- **Pending Module 1 / Tasks 1.2–1.5:** The implementation uses the existing Manus/MySQL setup and does not provide the PRD’s Neon/Clerk/Stripe/ImageKit environment contract; no secrets were added or inferred during this audit.
+- **Completed Module 1 / Task 1.2:** Added `@neondatabase/serverless`, `@clerk/nextjs`, and `stripe`; the PRD-listed `drizzle-orm`, `drizzle-kit`, `zod`, and `lucide-react` dependencies were already present. Verification passed with `pnpm build:next`, the existing `pnpm build`, and `pnpm check`; no secrets were added or inferred.
 - **Pending Module 2 / Tasks 2.1–2.6:** Drizzle schema/migrations exist, but they are MySQL-oriented and do not yet match the complete PostgreSQL/Neon schema and seed requirements in the PRD, including every listed core table.
 - **Pending Module 3:** Authentication uses the starter Manus OAuth/session flow rather than Clerk, so Clerk installation, middleware, Clerk-user sync and the exact Clerk verification gate remain incomplete.
 - **Pending Module 4:** Stripe Checkout/webhooks and ImageKit are not verified in this repository; those integration tasks remain pending.
@@ -196,4 +196,4 @@
 - **Pending Module 5 / Task 5.11 Plans:** The plans view exists, but live Stripe test-mode checkout is not verified; the billing portion remains pending.
 - **Pending Module 6:** Stripe end-to-end testing, privacy/PICS link audit, secret-bundle audit, and a complete manual primary-journey walkthrough remain pending.
 
-**Next clean-thread starting point:** Module 1, Task 1.2 — “Install core dependencies: `drizzle-orm`, `@neondatabase/serverless`, `drizzle-kit`, `@clerk/nextjs`, `stripe`, `zod`, `lucide-react` (or preferred icon set).”
+**Next clean-thread starting point:** Module 1, Task 1.3 — “Create `.env.local` with all required keys (Clerk, DATABASE_URL, Stripe test keys, ImageKit).”
